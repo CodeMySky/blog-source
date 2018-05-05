@@ -40,6 +40,52 @@ tags: SQL
 | 60     | 3/2/98     | 6       | 7              | 720    |
 | 70     | 5/6/98     | 9       | 7              | 150    |
 
+## Questions
+- The names of all salespeople that have an order with Samsonic.
+- The names of all salespeople that do not have any order with Samsonic.
+- The name of all salespeople that have 2 or more orders.
+- Write a SQL statement to insert rows into a table called highAchiever(Name, Age), where a salesperson must have a salary of 100,000 or greater to be included in the table.
+
+## Answers
+
+```SQL
+-- The names of all salespeople that have an order with Samsonic.
+SELECT sp.Name
+FROM Salesperson sp
+JOIN Orders o ON sp.ID = o.salesperson_id
+JOIN Customer c on c.ID = o.cust_id
+WHERE c.Name = 'Samsonic'
+```
+
+```SQL
+-- The names of all salespeople that do not have any order with Samsonic.
+SELECT sp.Name
+FROM Salesperson sp
+WHERE sp.ID NOT IN (
+    SELECT o.salesperson_id
+    FROM Orders o ON o.cust_id = c.ID
+    WHERE c.Name == 'Samsonic'
+)
+```
+
+```SQL
+-- The name of all salespeople that have 2 or more orders
+SELECT sp.Name
+FROM Salesperson sp
+JOIN Orders o ON sp.ID = o.salesperson_id
+GROUP BY o.salesperson_id
+HAVING COUNT(*) >= 2
+```
+
+```SQL
+-- Write a SQL statement to insert rows into a table called highAchiever(Name, Age), where a salesperson must have a salary of 100,000 or greater to be included in the table.
+INSERT INTO highAchiever (Name, Age)
+(
+    SELECT sp.Name, sp.Age
+    FROM Salesperson sp
+    WHERE sp.Salary >= 100000
+)
+```
 
 ## Reference
 - http://www.programmerinterview.com/index.php/database-sql/practice-interview-question-1/

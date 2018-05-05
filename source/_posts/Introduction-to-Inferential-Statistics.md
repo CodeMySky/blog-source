@@ -10,9 +10,9 @@ We can use a serious of test to decide whether our model is good or not includin
 ## Population Mean vs. Sample Mean
 For a very large population, it is very hard to get the distribution of the entire population. Whatever distribution of population is, the sample mean will have a normal distribution.
 ## Margin of Error
-{% math %}
+$$
 \frac{2\sigma}{\sqrt{n}}
-{% endmath %}
+$$
 ## Confidence Bond
 ## Z-Score
 # Hypothesis Testing
@@ -39,9 +39,9 @@ The distribution of Z score looks like this.
 TODO: Image of Z Distribution.
 
 ## Way to calculate Z-score
-{% math %}
+$$
 Z = \frac{Sample Mean}{Standard Error}
-{% endmath %}
+$$
 
 ## Z-Critical Value
 If the Z-score is larger than Z critical value, we can determine that the sample is different from the population.
