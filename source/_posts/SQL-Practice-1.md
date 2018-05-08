@@ -62,9 +62,67 @@ INSERT INTO highAchiever (Name, Age)
 ;
 ```
 
+## Advanced Questions
+
+### Question 1
+We want to retrieve the names of all salespeople that have more than 1 order from the tables above. You can assume that each salesperson only has one ID.
+
+If that is the case, then what (if anything) is wrong with the following SQL?:
+
+```SQL
+SELECT Name
+FROM Orders, Salesperson
+WHERE Orders.salesperson_id = Salesperson.ID
+GROUP BY salesperson_id
+HAVING COUNT( salesperson_id ) > 1;
+```
+
+### Answer
+
+`Name` is not included in the `GROUP BY` clause.
+
+```SQL
+SELECT Name
+FROM Orders, Salesperson
+WHERE Orders.salesperson_id = Salesperson.ID
+GROUP BY salesperson_id, Name
+HAVING COUNT( salesperson_id ) > 1;
+```
+
+### Question 2
+Find the largest order amount for each salesperson and the associated order number, along with the customer to whom that order belongs to. 
+
+### Answer 2
+We do this in two steps.
+
+First, we selected out sales person and top orders.
+
+```SQL
+SELECT salesperson_id, MAX( Amount ) AS MaxOrder
+FROM Orders
+GROUP BY salesperson_id
+```
+
+Then we match the result with other table to generate final result.
+
+```SQL
+SELECT Salesperson.ID, Salesperson.Name, Number AS OrderNumber, Orders.Amount
+FROM Orders
+JOIN Salesperson 
+ON Salesperson.ID = Orders.salesperson_id
+JOIN (
+SELECT salesperson_id, MAX( Amount ) AS MaxOrder
+FROM Orders
+GROUP BY salesperson_id
+) AS TopOrders
+ON TopOrders.salesperson_id = Salesperson.ID AND Orders.Amount = TopOrders.MaxOrder
+GROUP BY Salesperson.ID, Orders.Amount;
+```
+
 ## Reference
 
 - http://www.programmerinterview.com/index.php/database-sql/practice-interview-question-1/
+- https://www.programmerinterview.com/index.php/database-sql/advanced-sql-interview-questions-and-answers/
 
 ### Salesperson
 
