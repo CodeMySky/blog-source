@@ -1,5 +1,5 @@
 ---
-title: SQL-Practice-1
+title: SQL Practice 1
 date: 2018-05-03 22:12:00
 tags: SQL
 ---
